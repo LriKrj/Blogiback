@@ -3,6 +3,7 @@ const Blog = require('../models/blog')
 
 const { userExtractor } = require('../utils/middleware')
 
+//kaikki blogit
 router.get('/', async (request, response) => {
   const blogs = await Blog
     .find({})
@@ -10,7 +11,7 @@ router.get('/', async (request, response) => {
 
   response.json(blogs)
 })
-
+//uusi blogi
 router.post('/', userExtractor, async (request, response) => {
   const { title, author, url, likes } = request.body
   const blog = new Blog({
@@ -33,7 +34,7 @@ router.post('/', userExtractor, async (request, response) => {
 
   response.status(201).json(createdBlog)
 })
-
+//update blog
 router.put('/:id', async (request, response) => {
   const { title, url, author, likes } = request.body
 
@@ -41,7 +42,7 @@ router.put('/:id', async (request, response) => {
 
   response.json(updatedBlog)
 })
-
+//delete blog
 router.delete('/:id', userExtractor, async (request, response) => {
   const blog = await Blog.findById(request.params.id)
 
